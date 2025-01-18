@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صلوات شمار</title>
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            direction: rtl;
+            text-align: center;
+            background: linear-gradient(180deg, #f9f6e8, #fadd69);
+            color: #2d572c;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
+        }
+        header {
+            background-color: #2d572c;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            white-space: nowrap;
+        }
+        .header-title {
+            font-size: px;
+            font-weight: bold;
+        }
+        .header-button {
+            font-size: 16px;
+            background-color: #248c32;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .header-button:hover {
+            background-color: #1e6b27;
+        }
+        .header-button:first-child {
+    margin-left: 7px; /* فاصله از لبه چپ */
+}
+
+.header-button:last-child {
+    margin-right: 7px; /* فاصله از لبه راست */
+}
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .counter-display {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            background-color: #e8e4d4;
+            padding: 10px 20px;
+            border: 2px solid #2d572c;
+            border-radius: 10px;
+        }
+        button {
+            font-size: 20px;
+            background-color: #2d572c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #248c32;
+        }
+        footer {
+            padding: 20px;
+            background-color: #fde273;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .footer-box {
+            background-color: rgb(225, 250, 219);
+            border: 2px solid #2d572c;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 80%;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(229, 242, 247);
+            padding: 20px;
+            border: 2px solid #2d572c;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 400px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header button {
+            background-color: #2d572c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal-header button:hover {
+            background-color: #8c7924;
+        }
+        .modal-body {
+            margin-top: 15px;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        .modal-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="header-button" id="virtueButton">فضیلت صلوات</button>
+        <div class="header-title">صلوات شمار</div>
+        <button class="header-button" id="tenThousandButton">ده هزار صلوات</button>
+    </header>
+    <main>
+        <div class="counter-display" id="userCount">0</div>
+        <button id="sendSalavat">صلوات بفرست</button>
+    </main>
+    <footer>
+        <div class="footer-box">تعداد صلوات‌های شما: <span id="userTotal">0</span></div>
+        <div class="footer-box">تعداد صلوات‌های کل کاربران: <span id="globalTotal">0</span></div>
+    </footer>
+    <div class="modal" id="virtueModal">
+        <div class="modal-header">
+            <div>حدیث فضیلت صلوات</div>
+            <button id="closeVirtueModal">بستن</button>
+        </div>
+        <div class="modal-body">
+            حضرت باقر و یا حضرت صادق علیه السلام میفرمایند:
+            <br>
+            سنگین ترین عملی كه روز قیامت در ترازوی اعمال قرار داده میشود، صلوات بر محمد و اهل بیت گرامی ایشان است.
+        </div>
+    </div>
+    <div class="modal" id="tenThousandModal">
+        <div class="modal-header">
+            <div>ده هزار صلوات</div>
+            <button id="closeTenThousandModal">بستن</button>
+        </div>
+        <div class="modal-body modal-image">
+            <img src="https://static.cdn.asset.aparat.com/avt/3544201-8924-b__3332.jpg" alt="ده هزار صلوات">
+            <button id="readButton">خوندم</button>
+            <div class="footer-box">تعداد خواندن شما: <span id="userReadCount">0</span></div>
+            <div class="footer-box">تعداد کل کاربران: <span id="globalReadCount">0</span></div>
+        </div>
+    </div>
+    <script>
+        // مدیریت شمارنده‌ها
+        const userCountElement = document.getElementById('userCount');
+        const userTotalElement = document.getElementById('userTotal');
+        const globalTotalElement = document.getElementById('globalTotal');
+
+        const userSalavatCount = localStorage.getItem('userSalavatCount') || 0;
+        const globalSalavatCount = localStorage.getItem('globalSalavatCount') || 0;
+
+        let userCount = parseInt(userSalavatCount);
+        let globalCount = parseInt(globalSalavatCount);
+
+        userCountElement.textContent = userCount;
+        userTotalElement.textContent = userCount;
+        globalTotalElement.textContent = globalCount;
+
+        document.getElementById('sendSalavat').addEventListener('click', () => {
+            userCount++;
+            globalCount++;
+
+            userCountElement.textContent = userCount;
+            userTotalElement.textContent = userCount;
+            globalTotalElement.textContent = globalCount;
+
+            localStorage.setItem('userSalavatCount', userCount);
+            localStorage.setItem('globalSalavatCount', globalCount);
+        });
+
+        // مدیریت کادر فضیلت صلوات
+        const virtueModal = document.getElementById('virtueModal');
+        const virtueButton = document.getElementById('virtueButton');
+        const closeVirtueModal = document.getElementById('closeVirtueModal');
+
+        virtueButton.addEventListener('click', () => {
+            virtueModal.style.display = 'block';
+        });
+
+        closeVirtueModal.addEventListener('click', () => {
+            virtueModal.style.display = 'none';
+        });
+
+        // مدیریت کادر ده هزار صلوات
+        const tenThousandModal = document.getElementById('tenThousandModal');
+        const tenThousandButton = document.getElementById('tenThousandButton');
+        const closeTenThousandModal = document.getElementById('closeTenThousandModal');
+        const readButton = document.getElementById('readButton');
+        const userReadCountElement = document.getElementById('userReadCount');
+        const globalReadCountElement = document.getElementById('globalReadCount');
+
+        let userReadCount = parseInt(localStorage.getItem('userReadCount') || 0);
+        let globalReadCount = parseInt(localStorage.getItem('globalReadCount') || 0);
+
+        userReadCountElement.textContent = userReadCount;
+        globalReadCountElement.textContent = globalReadCount;
+
+        tenThousandButton.addEventListener('click', () => {
+            tenThousandModal.style.display = 'block';
+        });
+
+        closeTenThousandModal.addEventListener('click', () => {
+            tenThousandModal.style.display = 'none';
+        });
+
+        readButton.addEventListener('click', () => {
+            userReadCount++;
+            globalReadCount++;
+
+            userReadCountElement.textContent = userReadCount;
+            globalReadCountElement.textContent = globalReadCount;
+
+            localStorage.setItem('userReadCount', userReadCount);
+            localStorage.setItem('globalReadCount', globalReadCount);
+        });
+    </script>
+</body>
+</html>
