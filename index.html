@@ -277,17 +277,38 @@
     const database = firebase.database(app);
 
     // مدیریت صلوات
+    const userCountElement = document.getElementById('userCount');
+    const userTotalElement = document.getElementById('userTotal');
+    const globalTotalElement = document.getElementById('globalTotal');
+
+    // خواندن تعداد صلوات‌ها از Firebase
     function fetchGlobalSalavat() {
         const globalRef = database.ref('salavatCount');
         globalRef.on('value', (snapshot) => {
             const globalCount = snapshot.val() || 0;
-            document.getElementById('salavatCount').textContent = `تعداد کل صلوات‌ها: ${globalCount}`;
+            globalTotalElement.textContent = `تعداد صلوات‌های کل کاربران: ${globalCount}`;
+        });
+
+        const userRef = database.ref('userSalavatCount');
+        userRef.on('value', (snapshot) => {
+            const userCount = snapshot.val() || 0;
+            userTotalElement.textContent = `تعداد صلوات‌های شما: ${userCount}`;
+            userCountElement.textContent = userCount;
         });
     }
 
+    // ارسال صلوات به Firebase و به‌روزرسانی
     function incrementSalavat() {
         const globalRef = database.ref('salavatCount');
+        const userRef = database.ref('userSalavatCount');
+
+        // افزایش تعداد صلوات‌های کل کاربران
         globalRef.transaction((currentValue) => {
+            return (currentValue || 0) + 1;
+        });
+
+        // افزایش تعداد صلوات‌های کاربر محلی
+        userRef.transaction((currentValue) => {
             return (currentValue || 0) + 1;
         });
     }
