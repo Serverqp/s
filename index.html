@@ -18,22 +18,25 @@
             justify-content: space-between;
         }
         header {
-            background-color: #2d572c;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            white-space: nowrap;
+            width: 100%; /* کل عرض صفحه را بپوشاند */
+    height: 50px; /* افزایش ارتفاع هدر */
+    background-color: #9aaa60;
+    color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px; /* فضای بیشتر از اطراف */
+    box-sizing: border-box; /* محاسبه پدینگ داخل عرض */
+    white-space: nowrap;
         }
         .header-title {
-            font-size: px;
+            font-size: 13px;
             font-weight: bold;
         }
         .header-button {
             font-size: 16px;
-            background-color: #248c32;
-            color: white;
+            background-color: #187e26;
+            color: rgb(255, 255, 255);
             border: none;
             padding: 5px 15px;
             border-radius: 5px;
@@ -44,13 +47,11 @@
             background-color: #1e6b27;
         }
         .header-button:first-child {
-    margin-left: 7px; /* فاصله از لبه چپ */
-}
-
-.header-button:last-child {
-    margin-right: 7px; /* فاصله از لبه راست */
-}
-
+            margin-left: 7px; /* فاصله از لبه چپ */
+        }
+        .header-button:last-child {
+            margin-right: 7px; /* فاصله از لبه راست */
+        }
         main {
             flex: 1;
             display: flex;
@@ -59,7 +60,7 @@
             justify-content: center;
         }
         .counter-display {
-            font-size: 48px;
+            font-size: 64px;
             font-weight: bold;
             margin: 20px 0;
             background-color: #e8e4d4;
@@ -73,7 +74,7 @@
             color: white;
             border: none;
             padding: 15px 30px;
-            border-radius: 5px;
+            border-radius: 14px;
             cursor: pointer;
         }
         button:hover {
@@ -90,7 +91,7 @@
         .footer-box {
             background-color: rgb(225, 250, 219);
             border: 2px solid #2d572c;
-            border-radius: 10px;
+            border-radius: 18px;
             padding: 10px 20px;
             font-size: 18px;
             font-weight: bold;
@@ -158,9 +159,8 @@
         <button id="sendSalavat">صلوات بفرست</button>
     </main>
     <footer>
-        <div class="footer-box">تعداد صلوات‌های شما: <span id="userTotal">0</span></div>
-        <div class="footer-box">تعداد صلوات‌های کل کاربران: <span id="globalTotal">0</span></div>
-    </footer>
+        <div class="footer-box">کل صلوات های شما در مجموع:  <span id="userTotal">0</span></div>
+    </footer> 
     <div class="modal" id="virtueModal">
         <div class="modal-header">
             <div>حدیث فضیلت صلوات</div>
@@ -181,145 +181,56 @@
             <img src="https://static.cdn.asset.aparat.com/avt/3544201-8924-b__3332.jpg" alt="ده هزار صلوات">
             <button id="readButton">خوندم</button>
             <div class="footer-box">تعداد خواندن شما: <span id="userReadCount">0</span></div>
-            <div class="footer-box">تعداد کل کاربران: <span id="globalReadCount">0</span></div>
         </div>
     </div>
     <script>
         // مدیریت شمارنده‌ها
         const userCountElement = document.getElementById('userCount');
         const userTotalElement = document.getElementById('userTotal');
-        const globalTotalElement = document.getElementById('globalTotal');
 
         const userSalavatCount = localStorage.getItem('userSalavatCount') || 0;
-        const globalSalavatCount = localStorage.getItem('globalSalavatCount') || 0;
-
         let userCount = parseInt(userSalavatCount);
-        let globalCount = parseInt(globalSalavatCount);
 
         userCountElement.textContent = userCount;
         userTotalElement.textContent = userCount;
-        globalTotalElement.textContent = globalCount;
 
         document.getElementById('sendSalavat').addEventListener('click', () => {
             userCount++;
-            globalCount++;
-
             userCountElement.textContent = userCount;
             userTotalElement.textContent = userCount;
-            globalTotalElement.textContent = globalCount;
-
             localStorage.setItem('userSalavatCount', userCount);
-            localStorage.setItem('globalSalavatCount', globalCount);
         });
 
         // مدیریت کادر فضیلت صلوات
         const virtueModal = document.getElementById('virtueModal');
-        const virtueButton = document.getElementById('virtueButton');
-        const closeVirtueModal = document.getElementById('closeVirtueModal');
-
-        virtueButton.addEventListener('click', () => {
+        document.getElementById('virtueButton').addEventListener('click', () => {
             virtueModal.style.display = 'block';
         });
 
-        closeVirtueModal.addEventListener('click', () => {
+        document.getElementById('closeVirtueModal').addEventListener('click', () => {
             virtueModal.style.display = 'none';
         });
 
         // مدیریت کادر ده هزار صلوات
         const tenThousandModal = document.getElementById('tenThousandModal');
-        const tenThousandButton = document.getElementById('tenThousandButton');
-        const closeTenThousandModal = document.getElementById('closeTenThousandModal');
-        const readButton = document.getElementById('readButton');
-        const userReadCountElement = document.getElementById('userReadCount');
-        const globalReadCountElement = document.getElementById('globalReadCount');
-
-        let userReadCount = parseInt(localStorage.getItem('userReadCount') || 0);
-        let globalReadCount = parseInt(localStorage.getItem('globalReadCount') || 0);
-
-        userReadCountElement.textContent = userReadCount;
-        globalReadCountElement.textContent = globalReadCount;
-
-        tenThousandButton.addEventListener('click', () => {
+        document.getElementById('tenThousandButton').addEventListener('click', () => {
             tenThousandModal.style.display = 'block';
         });
 
-        closeTenThousandModal.addEventListener('click', () => {
+        document.getElementById('closeTenThousandModal').addEventListener('click', () => {
             tenThousandModal.style.display = 'none';
         });
 
+        const readButton = document.getElementById('readButton');
+        let userReadCount = parseInt(localStorage.getItem('userReadCount') || 0);
+        const userReadCountElement = document.getElementById('userReadCount');
+        userReadCountElement.textContent = userReadCount;
+
         readButton.addEventListener('click', () => {
             userReadCount++;
-            globalReadCount++;
-
             userReadCountElement.textContent = userReadCount;
-            globalReadCountElement.textContent = globalReadCount;
-
             localStorage.setItem('userReadCount', userReadCount);
-            localStorage.setItem('globalReadCount', globalReadCount);
         });
     </script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
-<script>
-    // پیکربندی Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyBFcac4LppDeN1LGqHU2iQBtHKsPOBFEm0",
-        authDomain: "salavat-12945.firebaseapp.com",
-        databaseURL: "https://salavat-12945-default-rtdb.firebaseio.com/",
-        projectId: "salavat-12945",
-        storageBucket: "salavat-12945.firebasestorage.app",
-        messagingSenderId: "253282931",
-        appId: "1:253282931:web:c14cf7a0b0eba9a2a5b806"
-    };
-
-    // مقداردهی اولیه Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database(app);
-
-    // مدیریت صلوات
-    const userCountElement = document.getElementById('userCount');
-    const userTotalElement = document.getElementById('userTotal');
-    const globalTotalElement = document.getElementById('globalTotal');
-
-    // خواندن تعداد صلوات‌ها از Firebase
-    function fetchGlobalSalavat() {
-        const globalRef = database.ref('salavatCount');
-        globalRef.on('value', (snapshot) => {
-            const globalCount = snapshot.val() || 0;
-            globalTotalElement.textContent = `تعداد صلوات‌های کل کاربران: ${globalCount}`;
-        });
-
-        const userRef = database.ref('userSalavatCount');
-        userRef.on('value', (snapshot) => {
-            const userCount = snapshot.val() || 0;
-            userTotalElement.textContent = `تعداد صلوات‌های شما: ${userCount}`;
-            userCountElement.textContent = userCount;
-        });
-    }
-
-    // ارسال صلوات به Firebase و به‌روزرسانی
-    function incrementSalavat() {
-        const globalRef = database.ref('salavatCount');
-        const userRef = database.ref('userSalavatCount');
-
-        // افزایش تعداد صلوات‌های کل کاربران
-        globalRef.transaction((currentValue) => {
-            return (currentValue || 0) + 1;
-        });
-
-        // افزایش تعداد صلوات‌های کاربر محلی
-        userRef.transaction((currentValue) => {
-            return (currentValue || 0) + 1;
-        });
-    }
-
-    // افزودن رویداد به دکمه
-    document.getElementById('sendSalavat').addEventListener('click', () => {
-        incrementSalavat();
-    });
-
-    // نمایش تعداد صلوات‌ها
-    fetchGlobalSalavat();
-</script>
 </body>
 </html>
