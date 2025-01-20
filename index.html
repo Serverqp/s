@@ -200,58 +200,58 @@ button:hover {
         </div>
     </div>
     <script>
-        // مدیریت شمارنده‌ها
-        const userCountElement = document.getElementById('userCount');
-        const userTotalElement = document.getElementById('userTotal');
+    // مدیریت شمارنده‌ها
+    const userCountElement = document.getElementById('userCount');
+    const userTotalElement = document.getElementById('userTotal');
 
-        const userSalavatCount = localStorage.getItem('userSalavatCount') || 0;
-        let userCount = parseInt(userSalavatCount);
+    const userSalavatCount = localStorage.getItem('userSalavatCount') || 0;
+    let userCount = parseInt(userSalavatCount);
 
+    userCountElement.textContent = userCount;
+    userTotalElement.textContent = userCount;
+
+    document.getElementById('sendSalavat').addEventListener('click', () => {
+        userCount++;
         userCountElement.textContent = userCount;
         userTotalElement.textContent = userCount;
+        localStorage.setItem('userSalavatCount', userCount);
+    });
 
-        document.getElementById('sendSalavat').addEventListener('click', () => {
-            userCount++;
-            userCountElement.textContent = userCount;
-            userTotalElement.textContent = userCount;
-            localStorage.setItem('userSalavatCount', userCount);
-        });
+    // اضافه کردن دکمه ریست
+    document.getElementById('resetButton').addEventListener('click', () => {
+        userCount = 0;
+        userCountElement.textContent = userCount;
+        // این خط حذف شد: userTotalElement.textContent = userCount;
+    });
 
-        // اضافه کردن دکمه ریست
-        document.getElementById('resetButton').addEventListener('click', () => {
-            userCount = 0;
-            userCountElement.textContent = userCount;
-            userTotalElement.textContent = userCount;
-            localStorage.setItem('userSalavatCount', userCount);
-        });
+    // مدیریت کادر فضیلت صلوات
+    const virtueModal = document.getElementById('virtueModal');
+    document.getElementById('virtueButton').addEventListener('click', () => {
+        virtueModal.style.display = 'block';
+    });
 
-        // مدیریت کادر فضیلت صلوات
-        const virtueModal = document.getElementById('virtueModal');
-        document.getElementById('virtueButton').addEventListener('click', () => {
-            virtueModal.style.display = 'block';
-        });
+    document.getElementById('closeVirtueModal').addEventListener('click', () => {
+        virtueModal.style.display = 'none';
+    });
 
-        document.getElementById('closeVirtueModal').addEventListener('click', () => {
-            virtueModal.style.display = 'none';
-        });
+    // مدیریت کادر ده هزار صلوات
+    const tenThousandModal = document.getElementById('tenThousandModal');
+    document.getElementById('tenThousandButton').addEventListener('click', () => {
+        tenThousandModal.style.display = 'block';
+    });
 
-        // مدیریت کادر ده هزار صلوات
-        const tenThousandModal = document.getElementById('tenThousandModal');
-        document.getElementById('tenThousandButton').addEventListener('click', () => {
-            tenThousandModal.style.display = 'block';
-        });
+    document.getElementById('closeTenThousandModal').addEventListener('click', () => {
+        tenThousandModal.style.display = 'none';
+    });
 
-        document.getElementById('closeTenThousandModal').addEventListener('click', () => {
-            tenThousandModal.style.display = 'none';
-        });
+    // مدیریت خواندن دکمه ده هزار صلوات
+    document.getElementById('readButton').addEventListener('click', () => {
+        let userReadCount = localStorage.getItem('userReadCount') || 0;
+        userReadCount++;
+        localStorage.setItem('userReadCount', userReadCount);
+        document.getElementById('userReadCount').textContent = userReadCount;
+    });
+</script>
 
-        // مدیریت خواندن دکمه ده هزار صلوات
-        document.getElementById('readButton').addEventListener('click', () => {
-            let userReadCount = localStorage.getItem('userReadCount') || 0;
-            userReadCount++;
-            localStorage.setItem('userReadCount', userReadCount);
-            document.getElementById('userReadCount').textContent = userReadCount;
-        });
-    </script>
 </body>
 </html>
