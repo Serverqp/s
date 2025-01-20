@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="صلوات شمار, صلوات شمار آنلاین, سایت صلوات شمار, شمارنده صلوات, فضیلت های صلوات, سایت صلواتی محمدجواد جاودانفرد,">
     <title>صلوات شمار</title>
+    
     <style>
         body {
             font-family: 'Tahoma', sans-serif;
@@ -19,16 +20,16 @@
             justify-content: space-between;
         }
         header {
-            width: 100%; /* کل عرض صفحه را بپوشاند */
-    height: 50px; /* افزایش ارتفاع هدر */
-    background-color: #9aaa60;
-    color: rgb(0, 0, 0);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 30px; /* فضای بیشتر از اطراف */
-    box-sizing: border-box; /* محاسبه پدینگ داخل عرض */
-    white-space: nowrap;
+            width: 100%;
+            height: 50px;
+            background-color: #9aaa60;
+            color: rgb(0, 0, 0);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+            box-sizing: border-box;
+            white-space: nowrap;
         }
         .header-title {
             font-size: 13px;
@@ -44,14 +45,15 @@
             cursor: pointer;
             white-space: nowrap;
         }
+        
         .header-button:hover {
             background-color: #1e6b27;
         }
         .header-button:first-child {
-            margin-left: 7px; /* فاصله از لبه چپ */
+            margin-left: 7px;
         }
         .header-button:last-child {
-            margin-right: 7px; /* فاصله از لبه راست */
+            margin-right: 7px;
         }
         main {
             flex: 1;
@@ -78,9 +80,20 @@
             border-radius: 14px;
             cursor: pointer;
         }
+        button {
+    transition: all 0.3s ease; /* انیمیشن برای تغییر وضعیت */
+}
+
+button:hover {
+    transform: scale(1.1); /* بزرگ شدن دکمه هنگام هاور */
+    background-color: #b9621a;
         button:hover {
             background-color: #248c32;
-        }
+        }}
+        
+        #resetButton {
+    margin-top: 15px; /* فاصله از دکمه صلوات بفرست */
+}
         footer {
             padding: 20px;
             background-color: #fde273;
@@ -104,7 +117,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgb(229, 242, 247);
+            background-color: rgb(199, 245, 187);
             padding: 20px;
             border: 2px solid #2d572c;
             border-radius: 10px;
@@ -113,13 +126,14 @@
             max-width: 400px;
             animation: fadeIn 0.3s ease-in-out;
         }
+        
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .modal-header button {
-            background-color: #2d572c;
+            background-color: #f80606;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -147,6 +161,13 @@
                 opacity: 1;
             }
         }
+
+        .dome-img {
+            width: 250px; /* اندازه تصویر گنبد */
+            height: auto;
+            margin-bottom: 20px;}
+
+
     </style>
 </head>
 <body>
@@ -156,8 +177,10 @@
         <button class="header-button" id="tenThousandButton">ده هزار صلوات</button>
     </header>
     <main>
+        <img src="http://up.psdprint.ir/view/3077932/Free-png-image-Salavat-006.png" alt="گنبد امام حسین" class="dome-img">
         <div class="counter-display" id="userCount">0</div>
         <button id="sendSalavat">صلوات بفرست</button>
+        <button id="resetButton">ریست</button> <!-- دکمه ریست اضافه شد -->
     </main>
     <footer>
         <div class="footer-box">کل صلوات های شما در مجموع:  <span id="userTotal">0</span></div>
@@ -202,6 +225,14 @@
             localStorage.setItem('userSalavatCount', userCount);
         });
 
+        // اضافه کردن دکمه ریست
+        document.getElementById('resetButton').addEventListener('click', () => {
+            userCount = 0;
+            userCountElement.textContent = userCount;
+            userTotalElement.textContent = userCount;
+            localStorage.setItem('userSalavatCount', userCount);
+        });
+
         // مدیریت کادر فضیلت صلوات
         const virtueModal = document.getElementById('virtueModal');
         document.getElementById('virtueButton').addEventListener('click', () => {
@@ -222,15 +253,12 @@
             tenThousandModal.style.display = 'none';
         });
 
-        const readButton = document.getElementById('readButton');
-        let userReadCount = parseInt(localStorage.getItem('userReadCount') || 0);
-        const userReadCountElement = document.getElementById('userReadCount');
-        userReadCountElement.textContent = userReadCount;
-
-        readButton.addEventListener('click', () => {
+        // مدیریت خواندن دکمه ده هزار صلوات
+        document.getElementById('readButton').addEventListener('click', () => {
+            let userReadCount = localStorage.getItem('userReadCount') || 0;
             userReadCount++;
-            userReadCountElement.textContent = userReadCount;
             localStorage.setItem('userReadCount', userReadCount);
+            document.getElementById('userReadCount').textContent = userReadCount;
         });
     </script>
 </body>
